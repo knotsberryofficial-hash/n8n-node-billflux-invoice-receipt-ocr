@@ -1,5 +1,6 @@
 import {
 	IAuthenticateGeneric,
+	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
 	Icon,
@@ -27,9 +28,17 @@ export class BillfluxInvoiceReceiptOCR implements ICredentialType {
 		type: 'generic',
 		properties: {
 			headers: {
-				'X-RapidAPI-Key': '={{$credentials.apiKey}}'
+				'X-RapidAPI-Key': '={{$credentials.apiKey}}',
+				'X-RapidAPI-Host': 'billflux-invoice-receipt-ocr.p.rapidapi.com',
 			}
 		},
 	} as IAuthenticateGeneric;
+
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: 'https://billflux-invoice-receipt-ocr.p.rapidapi.com',
+			url: '/health',
+		},
+	};
 }
 

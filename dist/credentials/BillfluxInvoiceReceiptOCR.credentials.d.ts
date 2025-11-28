@@ -1,4 +1,4 @@
-import { IAuthenticateGeneric, ICredentialType, INodeProperties, Icon } from 'n8n-workflow';
+import { IAuthenticateGeneric, ICredentialTestRequest, ICredentialType, INodeProperties, Icon } from 'n8n-workflow';
 export declare class BillfluxInvoiceReceiptOCR implements ICredentialType {
     name: string;
     displayName: string;
@@ -6,4 +6,5 @@ export declare class BillfluxInvoiceReceiptOCR implements ICredentialType {
     icon: Icon;
     properties: INodeProperties[];
     authenticate: IAuthenticateGeneric;
+    test: ICredentialTestRequest;
 }

@@ -1,9 +1,9 @@
 {
     "name": "n8n-nodes-billflux-invoice-receipt-ocr",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "description": "n8n node for Billflux Invoice Receipt OCR - Extract data from invoices and receipts",
     "license": "MIT",
-    "homepage": "",
+    "homepage": "billflux.io/",
     "keywords": [
         "n8n-community-node-package",
         "billflux",
@@ -12,21 +12,19 @@
         "ocr"
     ],
     "author": {
-        "name": "",
-        "email": ""
+        "name": "Knotsberry AI",
+        "email": "knotsberryofficial@gmail.com"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/<...>/n8n-nodes-billflux-invoice-receipt-ocr.git"
+        "url": "git+https://github.com/knotsberryofficial-hash/n8n-node-billflux-invoice-receipt-ocr.git"
     },
     "scripts": {
-        "build": "n8n-node build",
+        "build": "tsc",
         "build:watch": "tsc --watch",
         "dev": "n8n-node dev",
-        "lint": "n8n-node lint",
-        "lint:fix": "n8n-node lint --fix",
-        "release": "n8n-node release",
-        "prepublishOnly": "n8n-node prerelease"
+        "lint": "eslint nodes credentials",
+        "lint:fix": "eslint nodes credentials --fix"
     },
     "files": [
         "dist"
@@ -43,7 +41,6 @@
     },
     "devDependencies": {
         "@n8n/node-cli": "*",
-        "@types/node": "^24.10.1",
         "change-case": "4.1.2",
         "eslint": "9.32.0",
         "prettier": "3.6.2",

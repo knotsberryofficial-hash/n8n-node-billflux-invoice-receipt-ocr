@@ -24,8 +24,15 @@ class BillfluxInvoiceReceiptOCR {
             type: 'generic',
             properties: {
                 headers: {
-                    'X-RapidAPI-Key': '={{$credentials.apiKey}}'
+                    'X-RapidAPI-Key': '={{$credentials.apiKey}}',
+                    'X-RapidAPI-Host': 'billflux-invoice-receipt-ocr.p.rapidapi.com',
                 }
+            },
+        };
+        this.test = {
+            request: {
+                baseURL: 'https://billflux-invoice-receipt-ocr.p.rapidapi.com',
+                url: '/health',
             },
         };
     }
