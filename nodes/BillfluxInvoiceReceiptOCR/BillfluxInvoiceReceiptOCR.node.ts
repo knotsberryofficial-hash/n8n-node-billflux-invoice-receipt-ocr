@@ -5,6 +5,7 @@ import {
 	INodeTypeDescription,
 	NodeOperationError,
 } from 'n8n-workflow';
+import FormData from 'form-data';
 
 export class BillfluxInvoiceReceiptOCR implements INodeType {
 	description: INodeTypeDescription = {
@@ -120,41 +121,37 @@ export class BillfluxInvoiceReceiptOCR implements INodeType {
 					const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
 					const buffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
 
-					// Prepare form data for multipart upload
-					const formData: any = {
-						data: {
-							value: buffer,
-							options: {
-								filename: binaryData.fileName || 'file',
-								contentType: binaryData.mimeType,
-							},
-						},
-					};
+					// Prepare FormData for multipart upload
+					const formData = new FormData();
+					formData.append('data', buffer, {
+						filename: binaryData.fileName || 'file',
+						contentType: binaryData.mimeType,
+					});
 
 					// Build custom field JSON from attributes
 					if (customFields.attributes && customFields.attributes.length > 0) {
-						const customFieldJson: any = {};
+						const customFieldJson: Record<string, string> = {};
 						for (const attr of customFields.attributes) {
 							if (attr.name && attr.description) {
 								customFieldJson[attr.name] = attr.description;
 							}
 						}
 						if (Object.keys(customFieldJson).length > 0) {
-							formData.custom_field = JSON.stringify(customFieldJson);
+							formData.append('custom_field', JSON.stringify(customFieldJson));
 						}
 					}
 
-				// Make the API request with manual authentication using request
-				const response = await this.helpers.request({
-					method: 'POST',
-					uri: 'https://billflux-invoice-receipt-ocr.p.rapidapi.com/parse-file',
-					headers: {
-						'X-RapidAPI-Key': apiKey,
-						'X-RapidAPI-Host': 'billflux-invoice-receipt-ocr.p.rapidapi.com',
-					},
-					formData: formData,
-					json: true,
-				});
+					// Make the API request using httpRequest (recommended method)
+					const response = await this.helpers.httpRequest({
+						method: 'POST',
+						url: 'https://billflux-invoice-receipt-ocr.p.rapidapi.com/parse-file',
+						headers: {
+							'X-RapidAPI-Key': apiKey,
+							'X-RapidAPI-Host': 'billflux-invoice-receipt-ocr.p.rapidapi.com',
+							...formData.getHeaders(),
+						},
+						body: formData,
+					});
 
 					// Check if response is an array and unwrap it
 					const responseData = Array.isArray(response) && response.length === 1 

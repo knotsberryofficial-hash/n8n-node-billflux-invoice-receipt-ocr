@@ -1,0 +1,12 @@
+{
+    "name": "@types/form-data",
+    "version": "2.5.2",
+    "description": "Stub TypeScript definitions entry for form-data, which provides its own types definitions",
+    "main": "",
+    "scripts": {},
+    "license": "MIT",
+    "dependencies": {
+        "form-data": "*"
+    },
+    "deprecated": "This is a stub types definition. form-data provides its own type definitions, so you do not need this installed."
+}

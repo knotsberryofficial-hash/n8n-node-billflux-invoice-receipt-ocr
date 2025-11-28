@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BillfluxInvoiceReceiptOCR = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
+const form_data_1 = __importDefault(require("form-data"));
 class BillfluxInvoiceReceiptOCR {
     constructor() {
         this.description = {
@@ -110,15 +114,11 @@ class BillfluxInvoiceReceiptOCR {
                     const apiKey = credentials.apiKey;
                     const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
                     const buffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
-                    const formData = {
-                        data: {
-                            value: buffer,
-                            options: {
-                                filename: binaryData.fileName || 'file',
-                                contentType: binaryData.mimeType,
-                            },
-                        },
-                    };
+                    const formData = new form_data_1.default();
+                    formData.append('data', buffer, {
+                        filename: binaryData.fileName || 'file',
+                        contentType: binaryData.mimeType,
+                    });
                     if (customFields.attributes && customFields.attributes.length > 0) {
                         const customFieldJson = {};
                         for (const attr of customFields.attributes) {
@@ -127,18 +127,18 @@ class BillfluxInvoiceReceiptOCR {
                             }
                         }
                         if (Object.keys(customFieldJson).length > 0) {
-                            formData.custom_field = JSON.stringify(customFieldJson);
+                            formData.append('custom_field', JSON.stringify(customFieldJson));
                         }
                     }
-                    const response = await this.helpers.request({
+                    const response = await this.helpers.httpRequest({
                         method: 'POST',
-                        uri: 'https://billflux-invoice-receipt-ocr.p.rapidapi.com/parse-file',
+                        url: 'https://billflux-invoice-receipt-ocr.p.rapidapi.com/parse-file',
                         headers: {
                             'X-RapidAPI-Key': apiKey,
                             'X-RapidAPI-Host': 'billflux-invoice-receipt-ocr.p.rapidapi.com',
+                            ...formData.getHeaders(),
                         },
-                        formData: formData,
-                        json: true,
+                        body: formData,
                     });
                     const responseData = Array.isArray(response) && response.length === 1
                         ? response[0]

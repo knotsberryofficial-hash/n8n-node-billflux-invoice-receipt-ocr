@@ -41,6 +41,9 @@
 		"dist/nodes/BillfluxInvoiceReceiptOCR/BillfluxInvoiceReceiptOCR.node.js"
 	]
 	},
+	"dependencies": {
+	  "form-data": "^4.0.0"
+	},
 	"devDependencies": {
 	  "@n8n/node-cli": "*",
 	  "change-case": "4.1.2",
