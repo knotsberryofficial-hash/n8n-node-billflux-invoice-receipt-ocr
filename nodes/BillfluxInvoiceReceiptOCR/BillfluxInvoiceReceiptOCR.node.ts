@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import {
 	IExecuteFunctions,
 	INodeExecutionData,
@@ -5,7 +6,6 @@ import {
 	INodeTypeDescription,
 	NodeOperationError,
 } from 'n8n-workflow';
-import FormData from 'form-data';
 
 export class BillfluxInvoiceReceiptOCR implements INodeType {
 	description: INodeTypeDescription = {
@@ -121,14 +121,13 @@ export class BillfluxInvoiceReceiptOCR implements INodeType {
 					const binaryData = this.helpers.assertBinaryData(i, binaryPropertyName);
 					const buffer = await this.helpers.getBinaryDataBuffer(i, binaryPropertyName);
 
-					// Prepare FormData for multipart upload
-					const formData = new FormData();
-					formData.append('data', buffer, {
-						filename: binaryData.fileName || 'file',
-						contentType: binaryData.mimeType,
-					});
+					// Build multipart form data manually (no external dependencies allowed)
+					const boundary = '----n8nFormBoundary' + Math.random().toString(36).substring(2);
+					const fileName = binaryData.fileName || 'file';
+					const mimeType = binaryData.mimeType || 'application/octet-stream';
 
-					// Build custom field JSON from attributes
+					// Build custom field part if needed
+					let customFieldPart = Buffer.alloc(0);
 					if (customFields.attributes && customFields.attributes.length > 0) {
 						const customFieldJson: Record<string, string> = {};
 						for (const attr of customFields.attributes) {
@@ -137,20 +136,34 @@ export class BillfluxInvoiceReceiptOCR implements INodeType {
 							}
 						}
 						if (Object.keys(customFieldJson).length > 0) {
-							formData.append('custom_field', JSON.stringify(customFieldJson));
+							let cfBody = `--${boundary}\r\n`;
+							cfBody += `Content-Disposition: form-data; name="custom_field"\r\n\r\n`;
+							cfBody += JSON.stringify(customFieldJson);
+							cfBody += `\r\n`;
+							customFieldPart = Buffer.from(cfBody, 'utf8');
 						}
 					}
 
-					// Make the API request using httpRequest (recommended method)
+					// Build file part
+					let fileHeader = `--${boundary}\r\n`;
+					fileHeader += `Content-Disposition: form-data; name="data"; filename="${fileName}"\r\n`;
+					fileHeader += `Content-Type: ${mimeType}\r\n\r\n`;
+					const fileHeaderBuffer = Buffer.from(fileHeader, 'utf8');
+					const fileEndBuffer = Buffer.from(`\r\n--${boundary}--\r\n`, 'utf8');
+
+					// Combine all parts
+					const fullBody = Buffer.concat([customFieldPart, fileHeaderBuffer, buffer, fileEndBuffer]);
+
+					// Make the API request using httpRequest
 					const response = await this.helpers.httpRequest({
 						method: 'POST',
 						url: 'https://billflux-invoice-receipt-ocr.p.rapidapi.com/parse-file',
 						headers: {
 							'X-RapidAPI-Key': apiKey,
 							'X-RapidAPI-Host': 'billflux-invoice-receipt-ocr.p.rapidapi.com',
-							...formData.getHeaders(),
+							'Content-Type': `multipart/form-data; boundary=${boundary}`,
 						},
-						body: formData,
+						body: fullBody,
 					});
 
 					// Check if response is an array and unwrap it
