@@ -16,7 +16,8 @@ You must have a RapidAPI account with access to the Billflux Invoice Receipt OCR
 ### Getting Your API Key:
 
 1. Sign up for a RapidAPI account: https://rapidapi.com/
-2. Subscribe to the Billflux Invoice Receipt OCR API: https://rapidapi.com/billflux-invoice-receipt-ocr/api/billflux-invoice-receipt-ocr
+2. Subscribe to the Billflux Invoice Receipt OCR API: https://rapidapi.com/fadacaioffical/api/billflux-invoice-receipt-ocr
+
 3. Find your API key in the RapidAPI dashboard under "X-RapidAPI-Key"
 
 
@@ -77,7 +78,7 @@ Currently, only single page documents/images are supported, multipage support co
 
 For complete API documentation, visit:
 
-https://rapidapi.com/billflux-invoice-receipt-ocr/api/billflux-invoice-receipt-ocr
+https://rapidapi.com/fadacaioffical/api/billflux-invoice-receipt-ocr
 
 ## Example Workflows
 
