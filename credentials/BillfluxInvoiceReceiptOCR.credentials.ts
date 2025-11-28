@@ -9,7 +9,7 @@ export class BillfluxInvoiceReceiptOCR implements ICredentialType {
 	name = 'billfluxInvoiceReceiptOCRApi';
 	displayName = 'Billflux Invoice Receipt OCR API';
 	documentationUrl = 'https://rapidapi.com/billflux-invoice-receipt-ocr/api/billflux-invoice-receipt-ocr';
-	icon: Icon = 'file:../../../../../../../../n8n-nodes-pixi-invoice-reciept-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/logo-og.svg';
+	icon: Icon = 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/logo-og.svg';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Key',
