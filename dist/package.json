@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-billflux-invoice-receipt-ocr",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "n8n node for Billflux Invoice Receipt OCR - Extract data from invoices and receipts",
     "license": "MIT",
     "homepage": "billflux.io/",
@@ -20,11 +20,12 @@
         "url": "git+https://github.com/knotsberryofficial-hash/n8n-node-billflux-invoice-receipt-ocr.git"
     },
     "scripts": {
-        "build": "tsc",
-        "build:watch": "tsc --watch",
+        "build": "node node_modules/typescript/bin/tsc",
+        "build:watch": "node node_modules/typescript/bin/tsc --watch",
         "dev": "n8n-node dev",
         "lint": "eslint nodes credentials",
-        "lint:fix": "eslint nodes credentials --fix"
+        "lint:fix": "eslint nodes credentials --fix",
+        "test": "node node_modules/typescript/bin/tsc --noEmit"
     },
     "files": [
         "dist"
