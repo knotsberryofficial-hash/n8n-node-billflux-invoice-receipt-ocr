@@ -1,0 +1,46 @@
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "./abstract/execution-base.error"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.SystemShutdownExecutionCancelledError = exports.TimeoutExecutionCancelledError = exports.ManualExecutionCancelledError = exports.ExecutionCancelledError = void 0;
+    const execution_base_error_1 = require("./abstract/execution-base.error");
+    class ExecutionCancelledError extends execution_base_error_1.ExecutionBaseError {
+        // NOTE: prefer one of the more specific
+        constructor(executionId) {
+            super('The execution was cancelled', {
+                level: 'warning',
+                extra: { executionId },
+            });
+        }
+    }
+    exports.ExecutionCancelledError = ExecutionCancelledError;
+    class ManualExecutionCancelledError extends ExecutionCancelledError {
+        constructor(executionId) {
+            super(executionId);
+            this.message = 'The execution was cancelled manually';
+        }
+    }
+    exports.ManualExecutionCancelledError = ManualExecutionCancelledError;
+    class TimeoutExecutionCancelledError extends ExecutionCancelledError {
+        constructor(executionId) {
+            super(executionId);
+            this.message = 'The execution was cancelled because it timed out';
+        }
+    }
+    exports.TimeoutExecutionCancelledError = TimeoutExecutionCancelledError;
+    class SystemShutdownExecutionCancelledError extends ExecutionCancelledError {
+        constructor(executionId) {
+            super(executionId);
+            this.message = 'The execution was cancelled because the system is shutting down';
+        }
+    }
+    exports.SystemShutdownExecutionCancelledError = SystemShutdownExecutionCancelledError;
+});
+//# sourceMappingURL=execution-cancelled.error.js.map
