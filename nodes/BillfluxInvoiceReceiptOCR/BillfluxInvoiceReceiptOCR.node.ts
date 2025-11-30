@@ -12,7 +12,7 @@ export class BillfluxInvoiceReceiptOCR implements INodeType {
 		// Basic node details will go here
 		displayName: 'Billflux Invoice Receipt OCR',
 		name: 'billfluxInvoiceReceiptOCR',
-		icon: 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/logo-og.svg',
+		icon: 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/invoice-icon.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
