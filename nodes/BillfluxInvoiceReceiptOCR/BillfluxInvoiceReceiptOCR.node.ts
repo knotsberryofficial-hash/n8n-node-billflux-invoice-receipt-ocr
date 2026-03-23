@@ -12,7 +12,8 @@ export class BillfluxInvoiceReceiptOCR implements INodeType {
 		// Basic node details will go here
 		displayName: 'Billflux Invoice Receipt OCR',
 		name: 'billfluxInvoiceReceiptOCR',
-		icon: 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/invoice-icon.svg',
+		//icon: 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/invoice-icon.svg',
+		icon: 'file:invoice-icon.svg',// unable to show icon if use relative path in our custom server, only deep traversal works....
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',

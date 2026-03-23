@@ -7,7 +7,7 @@ class BillfluxInvoiceReceiptOCR {
         this.description = {
             displayName: 'Billflux Invoice Receipt OCR',
             name: 'billfluxInvoiceReceiptOCR',
-            icon: 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/invoice-icon.svg',
+            icon: 'file:invoice-icon.svg',
             group: ['transform'],
             version: 1,
             subtitle: '={{$parameter["operation"]}}',

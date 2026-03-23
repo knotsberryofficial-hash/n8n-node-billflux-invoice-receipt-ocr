@@ -10,7 +10,8 @@ export class BillfluxInvoiceReceiptOCR implements ICredentialType {
 	name = 'billfluxInvoiceReceiptOCRApi';
 	displayName = 'Billflux Invoice Receipt OCR API';
 	documentationUrl = 'https://rapidapi.com/billflux-invoice-receipt-ocr/api/billflux-invoice-receipt-ocr';
-	icon: Icon = 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/invoice-icon.svg';
+	//icon: Icon = 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/invoice-icon.svg';
+	icon: Icon = 'file:logo-og.svg'; // unable to show icon if use relative path in our custom server, only deep traversal works....
 	properties: INodeProperties[] = [
 		{
 			displayName: 'API Key',

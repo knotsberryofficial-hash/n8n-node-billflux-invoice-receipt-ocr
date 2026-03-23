@@ -6,7 +6,7 @@ class BillfluxInvoiceReceiptOCR {
         this.name = 'billfluxInvoiceReceiptOCRApi';
         this.displayName = 'Billflux Invoice Receipt OCR API';
         this.documentationUrl = 'https://rapidapi.com/billflux-invoice-receipt-ocr/api/billflux-invoice-receipt-ocr';
-        this.icon = 'file:../../../../../../../../n8n-node-billflux-invoice-receipt-ocr/dist/nodes/BillfluxInvoiceReceiptOCR/invoice-icon.svg';
+        this.icon = 'file:logo-og.svg';
         this.properties = [
             {
                 displayName: 'API Key',
